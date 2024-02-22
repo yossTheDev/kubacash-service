@@ -10,15 +10,15 @@ jobs:
   get-data:
     runs-on: ubuntu-latest
     steps:
-      - name: Obtener datos de API
-        run: |
-          curl -o data-informal.json https://exchange-rate.decubba.com/api/v2/informal/target/cup.json
-          curl -o data-formal.json https://exchange-rate.decubba.com/api/v2/formal/target/cup.json
-
       - name: Obtener Repositorio
         uses: actions/checkout@v2
         with:
           ref: main
+
+      - name: Obtener datos de API
+        run: |
+          curl -o data-informal.json https://exchange-rate.decubba.com/api/v2/informal/target/cup.json
+          curl -o data-formal.json https://exchange-rate.decubba.com/api/v2/formal/target/cup.json
 
       - name: Guardar datos en repositorio
         run: |
