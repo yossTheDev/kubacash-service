@@ -3,14 +3,20 @@ import { getEmojiForCurrency } from "./utils";
 import axios from "axios";
 require('dotenv').config();
 
-const sendDailyExchangeData = async () => {
-    const url = 'https://exchange-rate.decubba.com/api/v2/informal/target/cup.json'
-    const response = await axios.get(url)
-    const data = await response.data;
+const sendMessage = async () => {
+    /* Send Informal Exchange Rate */
+    sendExchangeData((await axios.get("https://exchange-rate.decubba.com/api/v2/informal/target/cup.json")).data);
+
+    /* Send Formal Exchange Rate */
+    sendExchangeData((await axios.get("https://exchange-rate.decubba.com/api/v2/formal/target/cup.json")).data, true);
+}
+
+
+const sendExchangeData = async (data: any, formal?: boolean) => {
     const { rates } = data;
 
     const markdown = `
-*💱 Tasas De Cambio*
+*💱 Tasas De Cambio ${formal && "Formal (Cadeca)"}*
 📅 ${dayjs().format('DD/MM/YYYY')}
 
 ${Object.entries(rates).filter(([currency, rate]) => currency !== "CUP").map(([currency, rate]) =>
@@ -41,5 +47,5 @@ ${Object.entries(rates).filter(([currency, rate]) => currency !== "CUP").map(([c
         });
 }
 
-sendDailyExchangeData();
+sendMessage();
 
