@@ -4,11 +4,11 @@ import axios from "axios";
 require('dotenv').config();
 
 const sendMessage = async () => {
-    /* Send Informal Exchange Rate */
-    sendExchangeData((await axios.get("https://exchange-rate.decubba.com/api/v2/informal/target/cup.json")).data);
-
     /* Send Formal Exchange Rate */
     sendExchangeData((await axios.get("https://exchange-rate.decubba.com/api/v2/formal/target/cup.json")).data, true);
+
+    /* Send Informal Exchange Rate */
+    sendExchangeData((await axios.get("https://exchange-rate.decubba.com/api/v2/informal/target/cup.json")).data, false);
 }
 
 
@@ -16,7 +16,7 @@ const sendExchangeData = async (data: any, formal?: boolean) => {
     const { rates } = data;
 
     const markdown = `
-*💱 Tasas De Cambio ${formal && "Formal (Cadeca)"}*
+*💱 Tasas De Cambio ${formal ? "Formal (Cadeca)" : "Informal"}*
 📅 ${dayjs().format('DD/MM/YYYY')}
 
 ${Object.entries(rates).filter(([currency, rate]) => currency !== "CUP").map(([currency, rate]) =>

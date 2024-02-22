@@ -8,6 +8,16 @@ export function getEmojiForCurrency(currency: string) {
             return '🇨🇺'
         case 'EUR':
             return '🇪🇺'
+        case 'CAD':
+            return '🇨🇦';
+        case 'CHF':
+            return '🇨🇭';
+        case 'GBP':
+            return '🇬🇧';
+        case 'JPY':
+            return '🇯🇵';
+        case 'MXN':
+            return '🇲🇽';
         default:
             return ''
     }
