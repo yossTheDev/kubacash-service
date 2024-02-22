@@ -1,0 +1,24 @@
+name: Obtener información de API y guardar JSON
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  get-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener datos de API
+        run: |
+          curl -o data/data.json https://exchange-rate.decubba.com/api/v2/informal/target/cup.json
+      - name: Guardar datos en repositorio
+        uses: actions/checkout@v2
+        with:
+          ref: main
+        run: |
+          mkdir -p dist/data/$(date +%Y-%m-%d)
+          cp data/data.json dist/data/$(date +%Y-%m-%d)/data.json
+          git config --global user.email "yossthedev@gmail.com"
+          git config --global user.name "Kubacash Service"
+          git add dist/data/$(date +%Y-%m-%d)/data.json
+          git commit -m "Actualizar datos $(date +%Y-%m-%d)"
+          git push
