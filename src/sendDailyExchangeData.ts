@@ -21,8 +21,8 @@ const sendExchangeData = async (data: any, formal?: boolean) => {
 
 ${Object.entries(rates).filter(([currency, rate]) => currency !== "CUP").map(([currency, rate]) =>
         `- ${getEmojiForCurrency(currency)} *${currency}*:
-  - *Compra*: 🛒 $${(rate as any).buy} cup 
-  - *Venta*: 💸 $${(rate as any).sell} cup`
+  - *Compra*: 🛒 $${(rate as any).buy} CUP 
+  - *Venta*: 💸 $${(rate as any).sell} CUP`
     ).join('\n')}
 
 🔔 Suscríbete a @kubacash para obtener información diaria de las tasas de cambio 💱
