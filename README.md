@@ -60,5 +60,4 @@ GET https://yossthedev.me/kubacash-service/data/2024-02-22/informal.json
 * La fecha en la URL debe estar en el formato correcto ("YYYY-MM-DD").
 * Las tasas de cambio se proporcionan para las monedas USD, MLC, CUP y EUR.
 * Los valores de compra (buy), venta (sell) y medio (mid) se expresan en la moneda de destino (CUP).
-* Con esta documentación en formato Markdown, tendrás una guía clara y completa para tu API Kubacash-Service.
 * Datos Guardados a partir del 21/2/2024
