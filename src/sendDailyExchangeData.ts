@@ -5,8 +5,8 @@ require('dotenv').config();
 
 const sendDailyExchangeData = async () => {
     const url = 'https://exchange-rate.decubba.com/api/v2/informal/target/cup.json'
-    const response = await fetch(url)
-    const data = await response.json();
+    const response = await axios.get(url)
+    const data = await response.data;
     const { rates } = data;
 
     const markdown = `
