@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Obtener datos de API
         run: |
-          curl -o ./dist/data/data.json https://exchange-rate.decubba.com/api/v2/informal/target/cup.json
+          curl -o data.json https://exchange-rate.decubba.com/api/v2/informal/target/cup.json
 
       - name: Obtener Repositorio
         uses: actions/checkout@v2
@@ -22,7 +22,7 @@ jobs:
       - name: Guardar datos en repositorio
         run: |
           mkdir -p dist/data/$(date +%Y-%m-%d)
-          cp data/data.json dist/data/$(date +%Y-%m-%d)/data.json
+          cp data.json dist/data/$(date +%Y-%m-%d).json
           git config --global user.email "yossthedev@gmail.com"
           git config --global user.name "Kubacash Service"
           git add dist/data/$(date +%Y-%m-%d)/data.json
