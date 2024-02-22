@@ -28,7 +28,7 @@ jobs:
         run: |
           npm install
 
-      - name: Send Message to Kubacash Channel
+      - name: Send Message to KubaCash Channel
         run: npm run sendDailyData
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
