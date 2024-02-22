@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Obtener datos de API
         run: |
-          wget --no-check-certificate --content-disposition --output-document="dist/data/data.json" https://exchange-rate.decubba.com/api/v2/informal/target/cup.json
+          curl -o ./dist/data/data.json https://exchange-rate.decubba.com/api/v2/informal/target/cup.json
 
       - name: Obtener Repositorio
         uses: actions/checkout@v2
