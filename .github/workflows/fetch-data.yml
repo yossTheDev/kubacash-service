@@ -1,8 +1,5 @@
-name: Obtener información de API y guardar JSON
+name: Get Exchange Rate Data
 on:
-  push:
-    branches:
-      - main
   schedule:
     - cron: "0 1 * * *"
 
@@ -12,17 +9,17 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - name: Obtener Repositorio
+      - name: Checkout Repository
         uses: actions/checkout@v2
         with:
           ref: main
 
-      - name: Obtener datos de API
+      - name: Get Exchange Rate Data
         run: |
           curl -o data-informal.json https://exchange-rate.decubba.com/api/v2/informal/target/cup.json
           curl -o data-formal.json https://exchange-rate.decubba.com/api/v2/formal/target/cup.json
 
-      - name: Guardar datos en repositorio
+      - name: Push Data to Repo
         run: |
           mkdir -p dist/data/$(date +%Y-%m-%d)
           cp data-informal.json dist/data/$(date +%Y-%m-%d)/informal.json
