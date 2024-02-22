@@ -23,8 +23,8 @@ jobs:
       - name: Guardar datos en repositorio
         run: |
           mkdir -p dist/data/$(date +%Y-%m-%d)
-          cp data/data-informal.json dist/data/$(date +%Y-%m-%d)/informal.json
-          cp data/data-formal.json dist/data/$(date +%Y-%m-%d)/formal.json
+          cp data-informal.json dist/data/$(date +%Y-%m-%d)/informal.json
+          cp data-formal.json dist/data/$(date +%Y-%m-%d)/formal.json
           git config --global user.email "yossthedev@gmail.com"
           git config --global user.name "Kubacash Service"
           git add dist/data/$(date +%Y-%m-%d)/informal.json
