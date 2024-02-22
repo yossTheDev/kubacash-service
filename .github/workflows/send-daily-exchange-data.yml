@@ -30,3 +30,6 @@ jobs:
 
       - name: Send Message to Kubacash Channel
         run: npm run sendDailyData
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ CHAT_ID }}
