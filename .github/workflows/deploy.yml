@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: "2 1 * * *"
 
 permissions:
   contents: read
