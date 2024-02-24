@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          yarn install
+          npm install
 
       - name: Get Exchange Rate Data
         run: |
@@ -38,7 +38,7 @@ jobs:
           cp data-formal.json dist/data/$(date +%Y-%m-%d)/formal.json
           git config --global user.email "yossthedev@gmail.com"
           git config --global user.name "Kubacash Service"
-          yarn run renderImages
+          npm run renderImages
           git add dist/data/$(date +%Y-%m-%d)/informal.json
           git add dist/data/$(date +%Y-%m-%d)/formal.json
           git add dist/data/$(date +%Y-%m-%d)/formal.png
