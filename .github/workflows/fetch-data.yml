@@ -45,8 +45,3 @@ jobs:
           git add dist/data/$(date +%Y-%m-%d)/informal.png
           git commit -m "Actualizar datos $(date +%Y-%m-%d)"
           git push
-
-      - name: Ejecutar segundo flujo de trabajo
-        uses: peter-evans/workflow-call@v1
-        with:
-          workflow_file: ./deploy.yml
