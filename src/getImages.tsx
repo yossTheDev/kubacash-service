@@ -79,29 +79,27 @@ const getImages = async () => {
           {Object.entries(rates)
             .filter(([currency]) => currency !== "CUP")
             .map(([currency, rate]) => (
-              <>
-                <div
-                  key={currency}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "2rem",
-                    borderBottom: "1px solid #ddd",
-                    width: "260px",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <CurrencyImage currency={currency}></CurrencyImage>
+              <div
+                key={currency}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "2rem",
+                  borderBottom: "1px solid #ddd",
+                  width: "260px",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <CurrencyImage currency={currency}></CurrencyImage>
 
-                    <p style={{ marginLeft: "1rem" }}>{currency}</p>
-                  </div>
-
-                  <p style={{ marginLeft: "1rem", textAlign: "center" }}>
-                    ${(rate as any).buy}
-                  </p>
-                  <p style={{ textAlign: "center" }}>${(rate as any).sell}</p>
+                  <p style={{ marginLeft: "1rem" }}>{currency}</p>
                 </div>
-              </>
+
+                <p style={{ marginLeft: "1rem", textAlign: "center" }}>
+                  ${rate.buy}
+                </p>
+                <p style={{ textAlign: "center" }}>${rate.sell}</p>
+              </div>
             ))}
         </div>
 
