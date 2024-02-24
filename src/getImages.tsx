@@ -246,7 +246,7 @@ const getImages = async (type: ExchangeType) => {
   const image = resvg.render();
 
   fs.writeFile(
-    `./dist/assets/data/${dayjs().format("YYYY-MM-DD")}/${type}.png`,
+    `./dist/data/${dayjs().format("YYYY-MM-DD")}/${type}.png`,
     image.asPng()
   );
 };
