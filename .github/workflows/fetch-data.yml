@@ -53,16 +53,3 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./dist
-
-      - name: Render Images
-        run: |
-          npm run renderImages
-          git add dist/data/$(date +%Y-%m-%d)/formal.png
-          git add dist/data/$(date +%Y-%m-%d)/informal.png
-          git commit -m "Actualizar datos $(date +%Y-%m-%d)"
-          git push
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: ./dist
