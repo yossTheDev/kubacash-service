@@ -2,17 +2,18 @@ import { Resvg } from "@resvg/resvg-js";
 import fs from "fs/promises";
 import satori from "satori";
 import { CurrencyImage } from "./components/CurrencyImage";
-import { getTodayData } from "./getData";
+import { getTodayData, getYesterdayData } from "./getData";
 
 const getImages = async () => {
   const data = await getTodayData();
+  const yesterday = await getYesterdayData();
   const { rates } = data;
 
   const poppinsRegularData = await fs.readFile(
     "./src/assets/fonts/Poppins-Regular.ttf"
   );
   const poppinsBoldData = await fs.readFile(
-    "./src/assets/fonts/Poppins-Regular.ttf"
+    "./src/assets/fonts/Poppins-Bold.ttf"
   );
 
   const svg = await satori(
@@ -64,43 +65,105 @@ const getImages = async () => {
             Tasas de Cambio Informal
           </p>
 
-          <div
-            style={{
-              display: "flex",
-              gap: "2rem",
-              borderBottom: "1px solid #ddd",
-            }}
+          <table
+            style={{ width: "100%", display: "flex", flexDirection: "column" }}
           >
-            <p style={{ marginLeft: "1rem" }}>Moneda</p>
-            <p>Compra</p>
-            <p>Venta</p>
-          </div>
+            <thead style={{ display: "flex", gap: "2rem" }}>
+              <tr style={{ display: "flex", gap: "2rem" }}>
+                <th>Moneda</th>
+                <th>Compra</th>
+                <th>Venta</th>
+              </tr>
+            </thead>
 
-          {Object.entries(rates)
-            .filter(([currency]) => currency !== "CUP")
-            .map(([currency, rate]) => (
-              <div
-                key={currency}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "2rem",
-                  borderBottom: "1px solid #ddd",
-                  width: "260px",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <CurrencyImage currency={currency}></CurrencyImage>
+            <tbody style={{ display: "flex", flexDirection: "column" }}>
+              {Object.entries(rates)
+                .filter(([currency]) => currency !== "CUP")
+                .map(([currency, rate]) => (
+                  <tr style={{ display: "flex", gap: "2rem" }} key={currency}>
+                    <td>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <CurrencyImage currency={currency}></CurrencyImage>
 
-                  <p style={{ marginLeft: "1rem" }}>{currency}</p>
-                </div>
-
-                <p style={{ marginLeft: "1rem", textAlign: "center" }}>
-                  ${rate.buy}
-                </p>
-                <p style={{ textAlign: "center" }}>${rate.sell}</p>
-              </div>
-            ))}
+                        <p style={{ marginLeft: "0.2rem" }}>{currency}</p>
+                      </div>
+                    </td>
+                    <td>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <p
+                          style={{
+                            textAlign: "center",
+                            color:
+                              yesterday.rates[currency].buy < rate.buy
+                                ? "#02ec5a"
+                                : "#ff4848",
+                          }}
+                        >
+                          ${rate.buy}
+                        </p>
+                        {yesterday.rates[currency].buy < rate.buy ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            fill="#02ec5a"
+                            viewBox="0 0 256 256"
+                          >
+                            <path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path>
+                          </svg>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            fill="#ff4848"
+                            viewBox="0 0 256 256"
+                          >
+                            <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                          </svg>
+                        )}
+                      </div>
+                    </td>
+                    <td>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <p
+                          style={{
+                            textAlign: "center",
+                            color:
+                              yesterday.rates[currency].sell < rate.sell
+                                ? "#02ec5a"
+                                : "#ff4848",
+                          }}
+                        >
+                          ${rate.sell}
+                        </p>
+                        {yesterday.rates[currency].sell < rate.sell ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            fill="#02ec5a"
+                            viewBox="0 0 256 256"
+                          >
+                            <path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path>
+                          </svg>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            fill="#ff4848"
+                            viewBox="0 0 256 256"
+                          >
+                            <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                          </svg>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
 
         <div

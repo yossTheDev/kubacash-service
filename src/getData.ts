@@ -7,5 +7,5 @@ export const getTodayData = async () => {
 }
 
 export const getYesterdayData = async () => {
-    return (await axios.get(`https://yossthedev.me/kubacash-service/data/${dayjs().format("YYYY-MM-DD")}/informal.json`)).data as ExchangeRates
+    return (await axios.get(`https://yossthedev.me/kubacash-service/data/${dayjs().subtract(1, "day").format("YYYY-MM-DD")}/informal.json`)).data as ExchangeRates
 }
