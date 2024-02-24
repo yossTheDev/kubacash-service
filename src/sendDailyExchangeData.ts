@@ -47,5 +47,14 @@ ${Object.entries(rates).filter(([currency, rate]) => currency !== "CUP").map(([c
         });
 }
 
+const checkCurrencyChange = async (currency: string) => {
+    const data = (await axios.get("https://exchange-rate.decubba.com/api/v2/formal/target/cup.json")).data
+    const { rates } = data;
+
+    Object.entries(rates).filter(([currency, rate]) => currency !== "CUP").find(([currency, rate]) => currency === currency)
+
+
+}
+
 sendMessage();
 

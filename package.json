@@ -10,8 +10,13 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@resvg/resvg-js": "^2.6.0",
+    "@types/react": "^18.2.58",
     "axios": "^1.6.7",
     "dayjs": "^1.11.10",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "react": "^18.2.0",
+    "satori": "^0.10.13",
+    "satori-html": "^0.3.2"
   }
 }
