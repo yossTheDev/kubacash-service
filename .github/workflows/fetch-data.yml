@@ -10,6 +10,9 @@ jobs:
   get-data:
     permissions:
       contents: write
+      pages: write
+      id-token: write
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -38,10 +41,28 @@ jobs:
           cp data-formal.json dist/data/$(date +%Y-%m-%d)/formal.json
           git config --global user.email "yossthedev@gmail.com"
           git config --global user.name "Kubacash Service"
-          npm run renderImages
           git add dist/data/$(date +%Y-%m-%d)/informal.json
           git add dist/data/$(date +%Y-%m-%d)/formal.json
+          git commit -m "Actualizar datos $(date +%Y-%m-%d)"
+          git push
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./dist
+
+      - name: Render Images
+        run: |
+          npm run renderImages
           git add dist/data/$(date +%Y-%m-%d)/formal.png
           git add dist/data/$(date +%Y-%m-%d)/informal.png
           git commit -m "Actualizar datos $(date +%Y-%m-%d)"
           git push
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./dist
