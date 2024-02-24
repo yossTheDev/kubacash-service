@@ -2,6 +2,9 @@ name: Get Exchange Rate Data
 on:
   schedule:
     - cron: "0 1 * * *"
+  push:
+    branches:
+      - main
 
 jobs:
   get-data:
@@ -26,7 +29,10 @@ jobs:
           cp data-formal.json dist/data/$(date +%Y-%m-%d)/formal.json
           git config --global user.email "yossthedev@gmail.com"
           git config --global user.name "Kubacash Service"
+          yarn run renderImages
           git add dist/data/$(date +%Y-%m-%d)/informal.json
           git add dist/data/$(date +%Y-%m-%d)/formal.json
+          git add dist/data/$(date +%Y-%m-%d)/formal.png
+          git add dist/data/$(date +%Y-%m-%d)/informal.png
           git commit -m "Actualizar datos $(date +%Y-%m-%d)"
           git push
