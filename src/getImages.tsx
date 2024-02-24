@@ -4,6 +4,7 @@ import satori from "satori";
 import { CurrencyImage } from "./components/CurrencyImage";
 import { getTodayData, getYesterdayData } from "./getData";
 import { ExchangeType } from "./interfaces/CurrencyType";
+import dayjs from "dayjs";
 
 const getImages = async (type: ExchangeType) => {
   const data = await getTodayData(type);
@@ -244,11 +245,11 @@ const getImages = async (type: ExchangeType) => {
 
   const image = resvg.render();
 
-  if (ExchangeType.formal) {
-    fs.writeFile("./image.png", image.asPng());
-  } else {
-    fs.writeFile("./image-informal.png", image.asPng());
-  }
+  fs.writeFile(
+    `./dist/assets/data/${dayjs().format("YYYY-MM-DD")}/${type}.png`,
+    image.asPng()
+  );
 };
 
 getImages(ExchangeType.formal);
+getImages(ExchangeType.informal);
