@@ -279,7 +279,7 @@ export const CurrencyImage: React.FC<Props> = ({ currency }) => {
         </svg>
       );
 
-    case "CH":
+    case "CHF":
       return (
         <svg
           width="2rem"

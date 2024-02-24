@@ -3,10 +3,11 @@ import fs from "fs/promises";
 import satori from "satori";
 import { CurrencyImage } from "./components/CurrencyImage";
 import { getTodayData, getYesterdayData } from "./getData";
+import { ExchangeType } from "./interfaces/CurrencyType";
 
-const getImages = async () => {
-  const data = await getTodayData();
-  const yesterday = await getYesterdayData();
+const getImages = async (type: ExchangeType) => {
+  const data = await getTodayData(type);
+  const yesterday = await getYesterdayData(type);
   const { rates } = data;
 
   const poppinsRegularData = await fs.readFile(
@@ -24,12 +25,13 @@ const getImages = async () => {
         backgroundImage:
           "url(https://products.ls.graphics/mesh-gradients/images/29.-Pale-Cornflower-Blue_1.jpg)",
         backgroundPosition: "center",
-        backgroundSize: "600px 400px",
+        backgroundSize:
+          type === ExchangeType.informal ? "600px 400px" : "600px 700px",
         backgroundRepeat: "no-repeat",
         padding: "3rem",
         alignItems: "center",
         width: "600px",
-        height: "400px",
+        height: type === ExchangeType.informal ? "400px" : "700px",
         gap: "2rem",
       }}
       className="items"
@@ -62,15 +64,25 @@ const getImages = async () => {
               fontFamily: "Poppins-Bold",
             }}
           >
-            Tasas de Cambio Informal
+            Tasas de Cambio{" "}
+            {type === ExchangeType.formal ? "Formal" : "Informal"}
           </p>
 
           <table
             style={{ width: "100%", display: "flex", flexDirection: "column" }}
           >
-            <thead style={{ display: "flex", gap: "2rem" }}>
-              <tr style={{ display: "flex", gap: "2rem" }}>
-                <th>Moneda</th>
+            <thead
+              style={{
+                display: "flex",
+                gap: "2rem",
+                marginBottom: "0.5rem",
+                borderBottom: "1px solid #ddd",
+              }}
+            >
+              <tr
+                style={{ display: "flex", gap: "2rem", alignItems: "center" }}
+              >
+                <th style={{ marginLeft: "1rem" }}>Moneda</th>
                 <th>Compra</th>
                 <th>Venta</th>
               </tr>
@@ -80,7 +92,15 @@ const getImages = async () => {
               {Object.entries(rates)
                 .filter(([currency]) => currency !== "CUP")
                 .map(([currency, rate]) => (
-                  <tr style={{ display: "flex", gap: "2rem" }} key={currency}>
+                  <tr
+                    style={{
+                      display: "flex",
+                      gap: "2rem",
+                      borderBottom: "1px solid #ddd",
+                      alignItems: "center",
+                    }}
+                    key={currency}
+                  >
                     <td>
                       <div style={{ display: "flex", alignItems: "center" }}>
                         <CurrencyImage currency={currency}></CurrencyImage>
@@ -99,7 +119,7 @@ const getImages = async () => {
                                 : "#ff4848",
                           }}
                         >
-                          ${rate.buy}
+                          ${rate.buy.toFixed(2)}
                         </p>
                         {yesterday.rates[currency].buy < rate.buy ? (
                           <svg
@@ -135,7 +155,7 @@ const getImages = async () => {
                                 : "#ff4848",
                           }}
                         >
-                          ${rate.sell}
+                          ${rate.sell.toFixed(2)}
                         </p>
                         {yesterday.rates[currency].sell < rate.sell ? (
                           <svg
@@ -198,7 +218,7 @@ const getImages = async () => {
     </div>,
     {
       width: 600,
-      height: 400,
+      height: type === ExchangeType.informal ? 400 : 700,
       fonts: [
         {
           name: "Poppins-Regular",
@@ -224,7 +244,11 @@ const getImages = async () => {
 
   const image = resvg.render();
 
-  fs.writeFile("./image.png", image.asPng());
+  if (ExchangeType.formal) {
+    fs.writeFile("./image.png", image.asPng());
+  } else {
+    fs.writeFile("./image-informal.png", image.asPng());
+  }
 };
 
-getImages();
+getImages(ExchangeType.formal);
