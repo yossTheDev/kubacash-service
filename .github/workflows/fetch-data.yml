@@ -17,6 +17,15 @@ jobs:
         with:
           ref: main
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: |
+          yarn install
+
       - name: Get Exchange Rate Data
         run: |
           curl -o data-informal.json https://exchange-rate.decubba.com/api/v2/informal/target/cup.json
