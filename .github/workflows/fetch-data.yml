@@ -36,8 +36,6 @@ jobs:
       - name: Push Data to Repo
         run: |
           mkdir -p dist/data/$(date +%Y-%m-%d)
-          cp data-informal.json dist/data/$(date +%Y-%m-%d)/informal.json
-          cp data-formal.json dist/data/$(date +%Y-%m-%d)/formal.json
           git config --global user.email "yossthedev@gmail.com"
           git config --global user.name "Kubacash Service"
           git add dist/data/$(date +%Y-%m-%d)/informal.json
