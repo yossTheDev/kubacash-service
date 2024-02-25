@@ -268,6 +268,7 @@ const getImages = async (type: ExchangeType, data: ExchangeRates) => {
 };
 
 const fetch = async () => {
+  fs.mkdir(`./dist/data/${dayjs().format("YYYY-MM-DD")}/`);
   const formal = await fetchData(ExchangeType.formal);
   const informal = await fetchData(ExchangeType.informal);
 
