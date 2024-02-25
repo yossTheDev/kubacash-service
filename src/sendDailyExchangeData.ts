@@ -11,7 +11,7 @@ const sendMessage = async () => {
     sendExchangeData(await getTodayData(ExchangeType.formal), ExchangeType.formal);
 
     /* Send Informal Exchange Rate */
-    sendExchangeData(await getTodayData(ExchangeType.informal), ExchangeType.formal);
+    sendExchangeData(await getTodayData(ExchangeType.informal), ExchangeType.informal);
 }
 
 
