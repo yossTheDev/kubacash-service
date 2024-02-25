@@ -1,22 +1,25 @@
-import dayjs from "dayjs";
-import { getEmojiForCurrency } from "./utils";
 import axios from "axios";
+import dayjs from "dayjs";
+import { getTodayData } from "./getData";
+import { ExchangeType } from "./interfaces/CurrencyType";
+import { ExchangeRates } from "./interfaces/ExhangeRates";
+import { getEmojiForCurrency } from "./utils";
 require('dotenv').config();
 
 const sendMessage = async () => {
     /* Send Formal Exchange Rate */
-    sendExchangeData((await axios.get("https://exchange-rate.decubba.com/api/v2/formal/target/cup.json")).data, true);
+    sendExchangeData(await getTodayData(ExchangeType.formal), ExchangeType.formal);
 
     /* Send Informal Exchange Rate */
-    sendExchangeData((await axios.get("https://exchange-rate.decubba.com/api/v2/informal/target/cup.json")).data, false);
+    sendExchangeData(await getTodayData(ExchangeType.informal), ExchangeType.formal);
 }
 
 
-const sendExchangeData = async (data: any, formal?: boolean) => {
+const sendExchangeData = async (data: ExchangeRates, type: ExchangeType) => {
     const { rates } = data;
 
     const markdown = `
-*💱 Tasas De Cambio ${formal ? "Formal (Cadeca)" : "Informal"}*
+*💱 Tasas De Cambio ${type === ExchangeType.formal ? "Formal (Cadeca)" : "Informal"}*
 📅 ${dayjs().format('DD/MM/YYYY')}
 
 ${Object.entries(rates).filter(([currency, rate]) => currency !== "CUP").map(([currency, rate]) =>
@@ -45,15 +48,6 @@ ${Object.entries(rates).filter(([currency, rate]) => currency !== "CUP").map(([c
         .catch((error) => {
             console.error(error);
         });
-}
-
-const checkCurrencyChange = async (currency: string) => {
-    const data = (await axios.get("https://exchange-rate.decubba.com/api/v2/formal/target/cup.json")).data
-    const { rates } = data;
-
-    Object.entries(rates).filter(([currency, rate]) => currency !== "CUP").find(([currency, rate]) => currency === currency)
-
-
 }
 
 sendMessage();

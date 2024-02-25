@@ -3,7 +3,7 @@
   "packageManager": "yarn@4.0.2",
   "scripts": {
     "sendDailyData": "ts-node src/sendDailyExchangeData.ts",
-    "renderImages": "ts-node ./src/getImages.tsx"
+    "fetchData": "ts-node ./src/fetchData.tsx"
   },
   "devDependencies": {
     "@types/node": "^20.11.19",

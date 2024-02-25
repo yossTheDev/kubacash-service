@@ -1,13 +1,29 @@
 import { Resvg } from "@resvg/resvg-js";
+import axios from "axios";
+import dayjs from "dayjs";
 import fs from "fs/promises";
 import satori from "satori";
 import { CurrencyImage } from "./components/CurrencyImage";
-import { getTodayData, getYesterdayData } from "./getData";
+import { getYesterdayData } from "./getData";
 import { ExchangeType } from "./interfaces/CurrencyType";
-import dayjs from "dayjs";
+import { ExchangeRates } from "./interfaces/ExhangeRates";
 
-const getImages = async (type: ExchangeType) => {
-  const data = await getTodayData(type);
+const fetchData = async (type: ExchangeType) => {
+  const data = (
+    await axios(
+      `https://exchange-rate.decubba.com/api/v2/${type}/target/cup.json`
+    )
+  ).data;
+
+  fs.writeFile(
+    `./dist/data/${dayjs().format("YYYY-MM-DD")}/${type}.json`,
+    JSON.stringify(data)
+  );
+
+  return data as ExchangeRates;
+};
+
+const getImages = async (type: ExchangeType, data: ExchangeRates) => {
   const yesterday = await getYesterdayData(type);
   const { rates } = data;
 
@@ -251,5 +267,12 @@ const getImages = async (type: ExchangeType) => {
   );
 };
 
-getImages(ExchangeType.formal);
-getImages(ExchangeType.informal);
+const fetch = async () => {
+  const formal = await fetchData(ExchangeType.formal);
+  const informal = await fetchData(ExchangeType.informal);
+
+  getImages(ExchangeType.formal, formal);
+  getImages(ExchangeType.informal, informal);
+};
+
+fetch();

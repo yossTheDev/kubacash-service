@@ -29,10 +29,9 @@ jobs:
         run: |
           npm install
 
-      - name: Get Exchange Rate Data
+      - name: Fetch Data
         run: |
-          curl -o data-informal.json https://exchange-rate.decubba.com/api/v2/informal/target/cup.json
-          curl -o data-formal.json https://exchange-rate.decubba.com/api/v2/formal/target/cup.json
+          npm run fetchData
 
       - name: Push Data to Repo
         run: |
@@ -43,6 +42,8 @@ jobs:
           git config --global user.name "Kubacash Service"
           git add dist/data/$(date +%Y-%m-%d)/informal.json
           git add dist/data/$(date +%Y-%m-%d)/formal.json
+          git add dist/data/$(date +%Y-%m-%d)/informal.png
+          git add dist/data/$(date +%Y-%m-%d)/formal.png
           git commit -m "Actualizar datos $(date +%Y-%m-%d)"
           git push
 
