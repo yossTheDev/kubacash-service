@@ -6,7 +6,7 @@ import satori from "satori";
 import { CurrencyImage } from "./components/CurrencyImage";
 import { getYesterdayData } from "./getData";
 import { ExchangeType } from "./interfaces/CurrencyType";
-import { ExchangeRates } from "./interfaces/ExhangeRates";
+import { ExchangeRates } from "./interfaces/ExchangeRates";
 
 const fetchData = async (type: ExchangeType) => {
   const data = (

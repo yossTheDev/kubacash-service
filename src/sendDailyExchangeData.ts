@@ -1,8 +1,8 @@
 import axios from "axios";
 import dayjs from "dayjs";
-import { getTodayData } from "./getData";
+import { getTodayData, getTodayImage } from "./getData";
 import { ExchangeType } from "./interfaces/CurrencyType";
-import { ExchangeRates } from "./interfaces/ExhangeRates";
+import { ExchangeRates } from "./interfaces/ExchangeRates";
 import { getEmojiForCurrency } from "./utils";
 require('dotenv').config();
 
@@ -35,7 +35,7 @@ ${Object.entries(rates).filter(([currency, rate]) => currency !== "CUP").map(([c
         chat_id: process.env.CHAT_ID,
         caption: markdown,
         parse_mode: 'Markdown',
-        photo: "https://yossthedev.me/kubacash-data/exchange_rate.png",
+        photo: getTodayImage(type),
     }
 
 
