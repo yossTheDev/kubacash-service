@@ -11,7 +11,7 @@ import { ExchangeRates } from "./interfaces/ExchangeRates";
 const fetchData = async (type: ExchangeType) => {
   const data = (
     await axios(
-      `https://exchange-rate.decubba.com/api/v2/${type}/target/cup.json`
+      `https://exchange-rate-api.pages.dev/api/v2/${type}/target/cup.json`
     )
   ).data;
 
