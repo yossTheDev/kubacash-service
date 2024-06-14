@@ -1,4 +1,4 @@
-# 💸💱 Kubacash-Service API
+# 💸💱Kubacash-Service API
 
 La API Kubacash-Service proporciona acceso a las tasas de cambio en Cuba para una fecha específica.
 
